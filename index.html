@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ristorante Perino | Arsita (TE)</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header / Navbar (Senza link admin visibile) -->
+    <header>
+        <div class="logo">Ristorante <span>Perino</span></div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#info">Orari & Contatti</a>
+            <a href="#prenota" class="btn-nav">Prenota un Tavolo</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Autentica Cucina Teramana ad Arsita</h1>
+            <p>Vivi un'esperienza culinaria d'eccellenza tra i sapori della tradizione e la bellezza del Gran Sasso.</p>
+            <a href="#prenota" class="btn-primary">Prenota Subito</a>
+        </div>
+    </section>
+
+    <!-- Menu Dinamico Section -->
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2>Il Nostro Menu</h2>
+            <p class="section-subtitle">Scopri i piatti del giorno preparati con ingredienti freschi e locali.</p>
+            
+            <!-- Categorie Menu -->
+            <div class="menu-tabs">
+                <button class="tab-btn active" onclick="filterMenu('tutti')">Tutti</button>
+                <button class="tab-btn" onclick="filterMenu('antipasti')">Antipasti</button>
+                <button class="tab-btn" onclick="filterMenu('primi')">Primi</button>
+                <button class="tab-btn" onclick="filterMenu('secondi')">Secondi</button>
+                <button class="tab-btn" onclick="filterMenu('dessert')">Dessert</button>
+            </div>
+
+            <!-- Griglia Prodotti Dinamica -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- Generato via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Info & Orari Section -->
+    <section id="info" class="info-section">
+        <div class="container info-grid">
+            <div class="info-card">
+                <i class="fa-solid fa-clock"></i>
+                <h3>Orari di Apertura</h3>
+                <p><strong>Martedì - Domenica:</strong></p>
+                <p>Pranzo: 12:30 - 16:00</p>
+                <p>Cena: 19:30 - 00:00</p>
+                <p class="closed">Lunedì: Chiuso</p>
+            </div>
+            <div class="info-card">
+                <i class="fa-solid fa-location-dot"></i>
+                <h3>Dove Siamo</h3>
+                <p>Arsita (Teramo), Abruzzo</p>
+                <p>Nel cuore del Parco Nazionale del Gran Sasso.</p>
+                <p><i class="fa-solid fa-phone"></i> +39 0861 XXX XXX</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sezione Prenotazioni -->
+    <section id="prenota" class="booking-section">
+        <div class="container">
+            <h2>Prenota un Tavolo</h2>
+            <p class="section-subtitle">Compila il modulo per riservare la tua esperienza da Perino.</p>
+            
+            <form id="booking-form" onsubmit="handleBooking(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Nome e Cognome</label>
+                        <input type="text" id="name" required placeholder="Mario Rossi">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="mario@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefono</label>
+                        <input type="tel" id="phone" required placeholder="333 1234567">
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Numero Persone</label>
+                        <!-- Modificato in input numerico libero -->
+                        <input type="number" id="guests" min="1" max="50" value="2" required placeholder="Es. 4">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Data</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Orario</label>
+                        <select id="time" required>
+                            <option value="12:30">12:30 (Pranzo)</option>
+                            <option value="13:00">13:00 (Pranzo)</option>
+                            <option value="13:30">13:30 (Pranzo)</option>
+                            <option value="14:00">14:00 (Pranzo)</option>
+                            <option value="19:30">19:30 (Cena)</option>
+                            <option value="20:00">20:00 (Cena)</option>
+                            <option value="20:30">20:30 (Cena)</option>
+                            <option value="21:00">21:00 (Cena)</option>
+                            <option value="21:30">21:30 (Cena)</option>
+                            <option value="22:00">22:00 (Cena)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Conferma Prenotazione</button>
+            </form>
+            <div id="booking-msg" class="booking-msg"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Ristorante Perino - Arsita (TE). Tutti i diritti riservati.</p>
+    </footer>
+
+    <!-- Script JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
