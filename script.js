@@ -1,3 +1,17 @@
+// Configurazione Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBKibMXl9x4pC-dYY-HqVE7HDRPqLWx6HI",
+    authDomain: "sito-renzo.firebaseapp.com",
+    projectId: "sito-renzo",
+    storageBucket: "sito-renzo.firebasestorage.app",
+    messagingSenderId: "389103738199",
+    appId: "1:389103738199:web:9f3070e5f90d7a46d37212",
+    measurementId: "G-XZKJ70B9RM"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 // Dati del Menu Dinamico
 const menuData = [
     { id: 1, name: "Antipasto all'Arsitana", category: "antipasti", price: "€ 12.00", desc: "Selezione di salumi tipici teramani, formaggi locali e miele." },
@@ -39,19 +53,18 @@ function filterMenu(category) {
     displayMenu(category);
 }
 
-// Funzione di invio prenotazione sincronizzata online (usando API condivise)
+// Invio prenotazione su Firestore (Cloud)
 async function handleBooking(event) {
     event.preventDefault();
 
     const booking = {
-        id: Date.now(),
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         phone: document.getElementById('phone').value,
         guests: document.getElementById('guests').value,
         date: document.getElementById('date').value,
         time: document.getElementById('time').value,
-        timestamp: new Date().toLocaleString()
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
     const msgDiv = document.getElementById('booking-msg');
@@ -59,20 +72,12 @@ async function handleBooking(event) {
     msgDiv.innerHTML = 'Invio prenotazione in corso...';
 
     try {
-        // Salvataggio temporaneo condiviso tramite cloud pubblico di test
-        let bookings = JSON.parse(localStorage.getItem('perino_shared_bookings')) || [];
-        
-        // Per testare subito anche su dispositivi diversi senza configurare server esterni complessi, 
-        // usiamo un trucco basato su cloud storage condiviso o simulazione remota.
-        // NOTA: Per un sito reale in produzione si collega a un database backend (es. Firebase o Supabase).
-        
-        bookings.push(booking);
-        localStorage.setItem('perino_shared_bookings', JSON.stringify(bookings));
-
+        await db.collection("prenotazioni").add(booking);
         msgDiv.style.color = '#16a34a';
         msgDiv.innerHTML = `Grazie ${booking.name}! Tavolo prenotato con successo per il ${booking.date} alle ore ${booking.time}.`;
         document.getElementById('booking-form').reset();
     } catch (error) {
+        console.error("Errore: ", error);
         msgDiv.style.color = '#dc2626';
         msgDiv.innerHTML = 'Errore durante la prenotazione. Riprova.';
     }
